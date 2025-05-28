@@ -5,6 +5,7 @@ import '../providers/user.dart';
 import '../providers/antique.dart';
 import '../widgets/dashboard_stats_card.dart';
 import '../widgets/dashboard_navigation_card.dart';
+import '../../authentication/providers/auth_provider.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -29,6 +30,40 @@ class DashboardScreen extends ConsumerWidget {
               ref.invalidate(userProvider);
             },
             icon: const Icon(Icons.refresh, color: Colors.white),
+          ),
+          IconButton(
+            onPressed: () async {
+              // Show confirmation dialog
+              final confirmed = await showDialog<bool>(
+                context: context,
+                builder:
+                    (ctx) => AlertDialog(
+                      title: const Text('تسجيل الخروج'), // Logout
+                      content: const Text(
+                        'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+                      ), // Are you sure you want to logout?
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(false),
+                          child: const Text('إلغاء'), // Cancel
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(true),
+                          child: const Text('تسجيل الخروج'), // Logout
+                        ),
+                      ],
+                    ),
+              );
+
+              if (confirmed == true) {
+                await ref.read(authStateProvider.notifier).logout();
+                if (context.mounted) {
+                  context.go('/login');
+                }
+              }
+            },
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: 'تسجيل الخروج', // Logout
           ),
         ],
       ),

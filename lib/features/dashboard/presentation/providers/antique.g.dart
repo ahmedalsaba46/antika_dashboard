@@ -6,7 +6,7 @@ part of 'antique.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$antiqueHash() => r'4d5a9cef2dc33f2e129584415ac7aadc0eec694b';
+String _$antiqueHash() => r'cf5677289b416c03e6a8ad56b81f53702923e155';
 
 /// See also [Antique].
 @ProviderFor(Antique)

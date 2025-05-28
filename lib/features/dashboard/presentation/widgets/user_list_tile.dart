@@ -21,18 +21,16 @@ class UserListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     // Convert int status to string for UI logic
     String statusString =
-        user.appRole == 'admin'
-            ? 'active'
-            : (() {
-              switch (user.status) {
-                case 0:
-                  return 'active';
-                case 1:
-                  return 'blocked';
-                default:
-                  return 'unknown';
-              }
-            })();
+        (() {
+          switch (user.status) {
+            case 0:
+              return 'active';
+            case 1:
+              return 'blocked';
+            default:
+              return 'unknown';
+          }
+        })();
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -128,36 +126,74 @@ class UserListTile extends StatelessWidget {
                     label: const Text('عرض كلمة المرور'), // Show Password
                   ),
                 const SizedBox(width: 8),
-                IconButton(
-                  onPressed: () async {
-                    final confirmed = await showDialog<bool>(
-                      context: context,
-                      builder:
-                          (ctx) => AlertDialog(
-                            title: const Text('حذف المستخدم'), // Delete User
-                            content: const Text(
-                              'هل أنت متأكد أنك تريد حذف هذا المستخدم؟',
-                            ), // Are you sure you want to delete this user?
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(ctx).pop(false),
-                                child: const Text('إلغاء'), // Cancel
-                              ),
-                              TextButton(
-                                onPressed: () => Navigator.of(ctx).pop(true),
-                                child: const Text('حذف'), // Delete
-                              ),
-                            ],
-                          ),
-                    );
-                    if (confirmed == true) {
-                      onDelete();
-                    }
-                  },
-                  icon: const Icon(Icons.delete_outline),
-                  color: Colors.red,
-                  tooltip: 'حذف المستخدم', // Delete User
-                ),
+                if (statusString == 'active')
+                  IconButton(
+                    onPressed: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (ctx) => AlertDialog(
+                              title: const Text(
+                                'إلغاء تفعيل المستخدم',
+                              ), // Deactivate User
+                              content: const Text(
+                                'هل أنت متأكد أنك تريد إلغاء تفعيل هذا المستخدم؟',
+                              ), // Are you sure you want to deactivate this user?
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(ctx).pop(false),
+                                  child: const Text('إلغاء'), // Cancel
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.of(ctx).pop(true),
+                                  child: const Text(
+                                    'إلغاء التفعيل',
+                                  ), // Deactivate
+                                ),
+                              ],
+                            ),
+                      );
+                      if (confirmed == true) {
+                        onDelete();
+                      }
+                    },
+                    icon: const Icon(Icons.person_off_outlined),
+                    color: Colors.orange,
+                    tooltip: 'إلغاء تفعيل المستخدم', // Deactivate User
+                  ),
+                if (statusString == 'blocked')
+                  IconButton(
+                    onPressed: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (ctx) => AlertDialog(
+                              title: const Text(
+                                'تفعيل المستخدم',
+                              ), // Activate User
+                              content: const Text(
+                                'هل أنت متأكد أنك تريد تفعيل هذا المستخدم؟',
+                              ), // Are you sure you want to activate this user?
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(ctx).pop(false),
+                                  child: const Text('إلغاء'), // Cancel
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.of(ctx).pop(true),
+                                  child: const Text('تفعيل'), // Activate
+                                ),
+                              ],
+                            ),
+                      );
+                      if (confirmed == true) {
+                        onStatusChanged('active');
+                      }
+                    },
+                    icon: const Icon(Icons.restore),
+                    color: Colors.green,
+                    tooltip: 'تفعيل المستخدم', // Activate User
+                  ),
               ],
             ),
           ],

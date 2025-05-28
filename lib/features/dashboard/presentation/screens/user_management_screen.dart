@@ -69,7 +69,11 @@ class _UserManagementScreenState extends ConsumerState<UserManagementScreen> {
                       await userNotifier.updateUser(user.id, {'status': 0});
                     },
                     onDelete: () async {
-                      await userNotifier.deleteUser(user.id);
+                      // Toggle status: if 0 then set to 1, if 1 then set to 0
+                      final newStatus = user.status == 0 ? 1 : 0;
+                      await userNotifier.updateUser(user.id, {
+                        'status': newStatus,
+                      });
                     },
                     // Add update and show password actions
                     onUpdate: () async {
