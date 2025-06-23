@@ -166,9 +166,9 @@ class UserControlCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        user.appRole == 'admin'
+        user.appRole == 0
             ? 'مدير'
-            : user.appRole == 'seller'
+            : user.appRole == 2
             ? 'بائع'
             : 'مستخدم', // Admin/Seller/User
         style: TextStyle(
@@ -180,13 +180,13 @@ class UserControlCard extends StatelessWidget {
     );
   }
 
-  Color _getRoleColor(String role) {
+  Color _getRoleColor(int role) {
     switch (role) {
-      case 'admin':
+      case 0:
         return Colors.purple;
-      case 'seller':
+      case 2:
         return Colors.blue;
-      case 'user':
+      case 1:
         return Colors.green;
       default:
         return Colors.grey;

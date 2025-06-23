@@ -44,7 +44,7 @@ class AuthState extends _$AuthState {
       }
 
       // Check if user is admin
-      if (user.appRole != 'admin') {
+      if (user.appRole != 0) {
         lastLoginError = 'not_admin';
         return false;
       }

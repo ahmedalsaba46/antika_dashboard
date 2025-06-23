@@ -112,9 +112,9 @@ class SellerApprovalCard extends StatelessWidget {
               _buildInfoRow(
                 Icons.business,
                 'الدور',
-                seller.appRole == 'admin'
+                seller.appRole == 0
                     ? 'مدير'
-                    : seller.appRole == 'seller'
+                    : seller.appRole == 2
                     ? 'بائع'
                     : 'مستخدم',
               ),

@@ -29,8 +29,7 @@ class _UserControlScreenState extends ConsumerState<UserControlScreen> {
           (users) => _filterUsersByStatus(
             (users ?? [])
                 .where(
-                  (u) =>
-                      (u.status == 0 || u.status == 1) && u.appRole != 'admin',
+                  (u) => (u.status == 0 || u.status == 1) && u.appRole != 0,
                 )
                 .toList(),
           ),

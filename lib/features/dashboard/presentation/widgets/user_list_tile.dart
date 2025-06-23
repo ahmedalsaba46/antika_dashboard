@@ -99,14 +99,14 @@ class UserListTile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (user.appRole != 'admin' && statusString == 'active')
+                if (user.appRole != 0 && statusString == 'active')
                   TextButton.icon(
                     onPressed: () => onStatusChanged('blocked'),
                     icon: const Icon(Icons.block, size: 16),
                     label: const Text('حظر'), // Block
                     style: TextButton.styleFrom(foregroundColor: Colors.red),
                   ),
-                if (user.appRole != 'admin' && statusString == 'blocked')
+                if (user.appRole != 0 && statusString == 'blocked')
                   TextButton.icon(
                     onPressed: () => onStatusChanged('active'),
                     icon: const Icon(Icons.check_circle, size: 16),
@@ -258,9 +258,9 @@ class UserListTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        user.appRole == 'admin'
+        user.appRole == 0
             ? 'مدير'
-            : user.appRole == 'seller'
+            : user.appRole == 2
             ? 'بائع'
             : 'مستخدم', // Admin/Seller/User
         style: TextStyle(
@@ -272,13 +272,13 @@ class UserListTile extends StatelessWidget {
     );
   }
 
-  Color _getRoleColor(String role) {
+  Color _getRoleColor(int role) {
     switch (role) {
-      case 'admin':
+      case 0:
         return Colors.purple;
-      case 'seller':
+      case 2:
         return Colors.blue;
-      case 'user':
+      case 1:
         return Colors.green;
       default:
         return Colors.grey;

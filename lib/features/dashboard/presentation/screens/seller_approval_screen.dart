@@ -33,7 +33,7 @@ class SellerApprovalScreen extends ConsumerWidget {
         data: (users) {
           final sellers =
               (users ?? [])
-                  .where((u) => u.status == 2 && u.appRole == 'seller')
+                  .where((u) => u.status == 2 && u.appRole == 2)
                   .toList();
           if (sellers.isEmpty) {
             return const Center(

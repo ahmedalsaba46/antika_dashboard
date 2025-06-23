@@ -6,7 +6,7 @@ class UserModel {
   final String? phoneNumber;
   final String? city;
   final int status;
-  final String appRole;
+  final int appRole;
   final DateTime? createdAt;
 
   const UserModel({
@@ -30,7 +30,7 @@ class UserModel {
       phoneNumber: json['phone_number'],
       city: json['city'],
       status: json['status'],
-      appRole: json['app_role'] as String,
+      appRole: json['app_role'],
     );
   }
 
@@ -60,7 +60,7 @@ class UserModel {
     String? phoneNumber,
     String? city,
     int? status,
-    String? appRole,
+    int? appRole,
     DateTime? createdAt,
   }) {
     return UserModel(

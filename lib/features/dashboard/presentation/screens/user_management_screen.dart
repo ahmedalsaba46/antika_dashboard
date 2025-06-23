@@ -31,8 +31,8 @@ class _UserManagementScreenState extends ConsumerState<UserManagementScreen> {
     return userAsync.when(
       data: (users) {
         // Only show admins
-        final admins =
-            (users ?? []).where((u) => u.appRole == 'admin').toList();
+        final admins = (users ?? []).where((u) => u.appRole == 0).toList();
+        print('Admins: ${admins.length}'); // Debugging line
         if (admins.isEmpty) {
           return const Center(child: Text('لا يوجد مدراء.'));
         }
@@ -176,7 +176,7 @@ class _UserManagementScreenState extends ConsumerState<UserManagementScreen> {
                         email: emailController.text,
                         phoneNumber: phoneController.text,
                         city: cityController.text,
-                        appRole: 'admin',
+                        appRole: 0,
                         status: 0,
                         password: passwordController.text,
                       ),
